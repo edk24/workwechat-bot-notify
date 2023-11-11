@@ -1,6 +1,6 @@
 {
     "name": "yuxiaobo/workwechat-bot-notify",
-    "description": "企业微信机通知sdk包",
+    "description": "企业微信机器人通知sdk包",
     "type": "library",
     "license": "mit",
     "autoload": {
