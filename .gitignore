@@ -2,3 +2,5 @@ vendor
 .DS_Store
 .env
 !.gitignore
+composer.lock
+.phpunit.result.cache

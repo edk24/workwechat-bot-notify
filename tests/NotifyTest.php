@@ -2,16 +2,12 @@
 
 namespace yuxiaobo\tests;
 
-// require_once __DIR__ . '/../vendor/autoload.php';
 use yuxiaobo\WorkWechatBotNotify;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Dotenv\Dotenv;
 
-define("ROOT_PATH", dirname(__DIR__) . "/");
-
-$env = new Dotenv();
-$env->load(ROOT_PATH . '/.env');
+define('ROOT_PATH', dirname(__DIR__));
+$env = parse_ini_file('./.env');
 
 class NotifyTest extends TestCase
 {
@@ -19,8 +15,9 @@ class NotifyTest extends TestCase
     // 发送文本测试
     public function testSendText()
     {
+        global $env;
         try {
-            $notify = new WorkWechatBotNotify($_ENV['key']);
+            $notify = new WorkWechatBotNotify($env['key']);
 
             $notify->sendText('这是一个测试', [], ['18311548014']);
 
@@ -36,7 +33,7 @@ class NotifyTest extends TestCase
     public function testSendMarkdown()
     {
         try {
-            $notify = new WorkWechatBotNotify($_ENV['key']);
+            $notify = new WorkWechatBotNotify($env['key']);
 
             $notify->sendMarkdown("# 这是一个`Markdown`测试\n> 111");
 
@@ -51,7 +48,7 @@ class NotifyTest extends TestCase
     public function testSendImage()
     {
         try {
-            $notify = new WorkWechatBotNotify($_ENV['key']);
+            $notify = new WorkWechatBotNotify($env['key']);
 
             // 文件资源
             $notify->sendImage(fopen(ROOT_PATH . '/tests/test.jpeg', 'r'));
@@ -67,7 +64,7 @@ class NotifyTest extends TestCase
     public function testSendNews()
     {
         try {
-            $notify = new WorkWechatBotNotify($_ENV['key']);
+            $notify = new WorkWechatBotNotify($env['key']);
             $notify->sendNews('中秋节礼品领取', '欢度中秋佳节', 'doc.edk24.com', 'http://res.mail.qq.com/node/ww/wwopenmng/images/independent/doc/test_pic_msg1.png');
             $this->assertTrue(true);
         } catch (\Exception $e) {
@@ -80,7 +77,7 @@ class NotifyTest extends TestCase
     public function testSendFile()
     {
         try {
-            $notify = new WorkWechatBotNotify($_ENV['key']);
+            $notify = new WorkWechatBotNotify($env['key']);
 
             $mediaId = $notify->uploadFile(fopen(ROOT_PATH . '/tests/test.jpeg', 'r'));
             $notify->sendFile($mediaId);
